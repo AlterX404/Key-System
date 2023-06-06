@@ -28,24 +28,7 @@
         }
         .warning-text {
             font-size: 24px;
-            color: red;
             margin-top: 20px;
-        }
-        .rainbow-button {
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            animation: rainbow 2s linear infinite;
-        }
-        @keyframes rainbow {
-            0% { color: red; }
-            14% { color: orange; }
-            28% { color: yellow; }
-            42% { color: green; }
-            57% { color: blue; }
-            71% { color: indigo; }
-            85% { color: violet; }
-            100% { color: red; }
         }
     </style>
 </head>
@@ -53,8 +36,8 @@
     <div class="container">
         <div class="text">Your Key:</div>
         <div class="key-display" id="keyDisplay"></div>
-        <div class="warning-text" id="warningText">WARNING: Don't try to bypass the key system!</div>
-        <a href="https://www.youtube.com/channel/UCBTkrkGEibTUayqVvs8G5fg" class="rainbow-button">Subscribe to Alter-X On YouTube</a>
+        <button class="key-button" onclick="generateKey()" id="generateButton" style="display: none;">Generate Key</button>
+        <div class="warning-text" id="warningText">WARNING: You need to visit both websites to generate the key.</div>
     </div>
 
     <script>
@@ -80,21 +63,33 @@
             }
         }
 
-        // Check if the user has visited the specific URL to gain access
-        var expectedURL = "https://alterx404.github.io/key-checker-2/";
-        var hasVisited = localStorage.getItem("hasVisited");
+        // Check if the user has visited both websites in the past 30 minutes
+        var website1URL = "https://alterx404.github.io/key-checker-2/";
+        var website2URL = "https://alterx404.github.io/Key-system-1/";
 
-        if (document.referrer === expectedURL || hasVisited) {
-            document.getElementById("keyDisplay").style.display = "block"; // Show the key display element
-            document.getElementById("warningText").style.display = "none"; // Hide the warning text
-            document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
-        } else {
-            document.getElementById("keyDisplay").style.display = "none"; // Hide the key display element
-            document.getElementById("warningText").style.display = "block"; // Show the warning text
+        function checkVisitedWebsites() {
+            var website1Visited = sessionStorage.getItem("website1Visited");
+            var website2Visited = sessionStorage.getItem("website2Visited");
+
+            if (website1Visited && website2Visited) {
+                document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
+            } else {
+                document.getElementById("warningText").style.display = "block"; // Show the warning text
+            }
         }
 
-        // Set the flag to indicate that the user has visited the page
-        localStorage.setItem("hasVisited", true);
+        function setVisitedWebsites() {
+            var currentURL = window.location.href;
+
+            if (currentURL === website1URL) {
+                sessionStorage.setItem("website1Visited", true);
+            } else if (currentURL === website2URL) {
+                sessionStorage.setItem("website2Visited", true);
+            }
+        }
+
+        checkVisitedWebsites();
+        setVisitedWebsites();
     </script>
 </body>
 </html>
