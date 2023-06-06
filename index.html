@@ -34,7 +34,7 @@
         <div class="text">Your Key:</div>
         <div class="key-display" id="keyDisplay"></div>
         <button class="key-button" onclick="generateKey()" id="generateButton" style="display: none;">Generate Key</button>
-        <div class="warning-text" id="warningText">WARNING: You need to visit both websites to generate the key.</div>
+        <div class="warning-text" id="warningText">WARNING: Don't try to bypass the key system!</div>
     </div>
 
     <script>
@@ -44,6 +44,7 @@
 
             if (key) {
                 document.getElementById("keyDisplay").innerText = key; // Set the stored key in the key display element
+                document.getElementById("generateButton").style.display = "none"; // Hide the "Generate Key" button
             } else {
                 var currentDate = new Date().toISOString().slice(0, 10); // Get the current date in the format "YYYY-MM-DD"
                 var randomString = ""; // Initialize an empty string to store the random characters
@@ -57,26 +58,19 @@
                 key = currentDate + "-" + randomString; // Concatenate the date and random string to form the key
                 localStorage.setItem("generatedKey", key); // Store the generated key in localStorage
                 document.getElementById("keyDisplay").innerText = key; // Set the generated key in the key display element
+                document.getElementById("generateButton").style.display = "none"; // Hide the "Generate Key" button
             }
         }
 
-        // Check if the user has visited both websites in the past 30 minutes
-        var site1 = "https://alterx404.github.io/key-checker-2/";
-        var site2 = "https://alterx404.github.io/Key-system-1/";
-        var currentTime = new Date().getTime();
-        var site1VisitTime = localStorage.getItem("site1VisitTime");
-        var site2VisitTime = localStorage.getItem("site2VisitTime");
-
-        if (site1VisitTime && site2VisitTime) {
-            if (currentTime - site1VisitTime < 30 * 60 * 1000 && currentTime - site2VisitTime < 30 * 60 * 1000) {
-                document.getElementById("generateButton").style.display = ""; // Show the "Generate Key" button
-                document.getElementById("warningText").style.display = "none"; // Hide the warning text
-            }
+        // Check if the page is accessed from a specific redirect URL
+        var redirectURL = "https://linkvertise.com/447323/alter-hub-key-system-2/1";
+        if (document.referrer === redirectURL) {
+            document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
+            document.getElementById("warningText").style.display = "none"; // Hide the warning text
+        } else {
+            document.getElementById("generateButton").style.display = "none"; // Hide the "Generate Key" button
+            document.getElementById("warningText").style.display = "block"; // Show the warning text
         }
-
-        // Set the visit times for both websites
-        localStorage.setItem("site1VisitTime", currentTime);
-        localStorage.setItem("site2VisitTime", currentTime);
     </script>
 </body>
 </html>
