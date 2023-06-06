@@ -4,10 +4,6 @@
     <title>Key Generator</title>
     <style>
         /* CSS styles for the button, key display, and text */
-        body {
-            background-color: black;
-            color: red;
-        }
         .container {
             text-align: center;
             margin-top: 100px;
@@ -28,6 +24,7 @@
         }
         .warning-text {
             font-size: 24px;
+            color: red;
             margin-top: 20px;
         }
     </style>
@@ -64,32 +61,22 @@
         }
 
         // Check if the user has visited both websites in the past 30 minutes
-        var website1URL = "https://alterx404.github.io/key-checker-2/";
-        var website2URL = "https://alterx404.github.io/Key-system-1/";
+        var site1 = "https://alterx404.github.io/key-checker-2/";
+        var site2 = "https://alterx404.github.io/Key-system-1/";
+        var currentTime = new Date().getTime();
+        var site1VisitTime = localStorage.getItem("site1VisitTime");
+        var site2VisitTime = localStorage.getItem("site2VisitTime");
 
-        function checkVisitedWebsites() {
-            var website1Visited = sessionStorage.getItem("website1Visited");
-            var website2Visited = sessionStorage.getItem("website2Visited");
-
-            if (website1Visited && website2Visited) {
+        if (site1VisitTime && site2VisitTime) {
+            if (currentTime - site1VisitTime < 30 * 60 * 1000 && currentTime - site2VisitTime < 30 * 60 * 1000) {
                 document.getElementById("generateButton").style.display = ""; // Show the "Generate Key" button
-            } else {
-                document.getElementById("warningText").style.display = "block"; // Show the warning text
+                document.getElementById("warningText").style.display = "none"; // Hide the warning text
             }
         }
 
-        function setVisitedWebsites() {
-            var currentURL = window.location.href;
-
-            if (currentURL === website1URL) {
-                sessionStorage.setItem("website1Visited", true);
-            } else if (currentURL === website2URL) {
-                sessionStorage.setItem("website2Visited", true);
-            }
-        }
-
-        checkVisitedWebsites();
-        setVisitedWebsites();
+        // Set the visit times for both websites
+        localStorage.setItem("site1VisitTime", currentTime);
+        localStorage.setItem("site2VisitTime", currentTime);
     </script>
 </body>
 </html>
