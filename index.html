@@ -49,28 +49,45 @@
                 var currentDate = new Date().toISOString().slice(0, 10); // Get the current date in the format "YYYY-MM-DD"
                 var randomString = ""; // Initialize an empty string to store the random characters
 
-                // Generate a random string of characters
-                for (var i = 0; i < 10; i++) { // Generate a 10-character long random string
-                    var randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97); // Generate a random lowercase letter
-                    randomString += randomChar; // Append the random character to the string
+                // Define the characters for the random string
+                var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+~`|}{[]\\:;?><,./-=";
+
+                // Specify the length for the new string
+                var lenString = 20;
+
+                // Set the seed for the random number generator using the current date
+                Math.seedrandom(currentDate);
+
+                // Loop to select a new character in each iteration
+                for (var i = 0; i < lenString; i++) {
+                    var rnum = Math.floor(Math.random() * characters.length);
+                    randomString += characters.substring(rnum, rnum + 1);
                 }
 
-                key = currentDate + "-" + randomString; // Concatenate the date and random string to form the key
-                localStorage.setItem("generatedKey", key); // Store the generated key in localStorage
-                document.getElementById("keyDisplay").innerText = key; // Set the generated key in the key display element
-                document.getElementById("generateButton").style.display = "none"; // Hide the "Generate Key" button
+                // Store the generated key in localStorage
+                localStorage.setItem("generatedKey", randomString);
+
+                // Display the generated key in the key display element
+                document.getElementById("keyDisplay").innerText = randomString;
+
+                // Hide the "Generate Key" button
+                document.getElementById("generateButton").style.display = "none";
             }
         }
 
-        // Check if the page is accessed from the allowed referrer
+        // Check if the page was redirected and show/hide the appropriate elements
         var referrer = document.referrer;
-        if (referrer === 'https://linkvertise.com/447323/alter-hub-key-system-2/1') {
-            // User is redirected from the allowed referrer, show the key generator
-            document.getElementById("generateButton").style.display = "block";
-        } else {
-            // User is not redirected from the allowed referrer, show the warning
-            document.getElementById("warningText").style.display = "block";
-        }
+        if (referrer === "https://linkvertise.com/447323/alter-hub-key-system-2/1") {
+        // User was redirected from the specified URL, show the key generation button
+        document.getElementById("generateButton").style.display = "block";
+        document.getElementById("warningText").style.display = "none"; // Hide the warning text
+    } else {
+        // User accessed the page directly or from a different URL, show the warning message
+        document.getElementById("generateButton").style.display = "none"; // Hide the generate button
+        document.getElementById("warningText").style.display = "block";
+    }
+
+        
     </script>
 </body>
 </html>
