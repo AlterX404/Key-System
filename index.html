@@ -34,7 +34,7 @@
         <div class="text">Your Key:</div>
         <div class="key-display" id="keyDisplay"></div>
         <button class="key-button" onclick="generateKey()" id="generateButton" style="display: none;">Generate Key</button>
-        <div class="warning-text" id="warningText">WARNING: Don't try to bypass the key system!</div>
+        <div class="warning-text" id="warningText" style="display: none;">WARNING: Don't try to bypass the key system!</div>
     </div>
 
     <script>
@@ -62,14 +62,14 @@
             }
         }
 
-        // Check if the page is accessed from a specific redirect URL
-        var redirectURL = "https://linkvertise.com/447323/alter-hub-key-system-2/1";
-        if (document.referrer === redirectURL) {
-            document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
-            document.getElementById("warningText").style.display = "none"; // Hide the warning text
+        // Check if the page is accessed from the allowed referrer
+        var referrer = document.referrer;
+        if (referrer === 'https://linkvertise.com/447323/alter-hub-key-system-2/1') {
+            // User is redirected from the allowed referrer, show the key generator
+            document.getElementById("generateButton").style.display = "block";
         } else {
-            document.getElementById("generateButton").style.display = "none"; // Hide the "Generate Key" button
-            document.getElementById("warningText").style.display = "block"; // Show the warning text
+            // User is not redirected from the allowed referrer, show the warning
+            document.getElementById("warningText").style.display = "block";
         }
     </script>
 </body>
