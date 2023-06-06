@@ -31,7 +31,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="text" id="keyText" style="display: block;">Your Key:</div>
+        <div class="text">Your Key:</div>
         <div class="key-display" id="keyDisplay"></div>
         <button class="key-button" onclick="generateKey()" id="generateButton" style="display: none;">Generate Key</button>
         <div class="warning-text" id="warningText">WARNING: Don't try to bypass the key system!</div>
@@ -60,16 +60,12 @@
             }
         }
 
-        // Check if the page is accessed from history or not
-        if (performance.navigation.type === 2) {
-            document.getElementById("warningText").innerText = "WARNING:\nDon't try to bypass the key system!";
-            document.getElementById("keyText").style.display = "none"; // Hide the "Your Key:" text
+        // Check if the page is accessed from the expected redirect URL
+        var expectedRedirectURL = "https://link-center.net/447323/alter-hub-key-system-2";
+        if (document.referrer === expectedRedirectURL) {
+            document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
         } else {
-            var urlParams = new URLSearchParams(window.location.search);
-            var linkvertiseRedirect = urlParams.get("linkvertise");
-            if (linkvertiseRedirect) {
-                document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
-            }
+            document.getElementById("warningText").style.display = "block"; // Show the warning text
         }
     </script>
 </body>
