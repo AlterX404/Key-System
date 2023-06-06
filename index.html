@@ -72,7 +72,7 @@
             var website2Visited = sessionStorage.getItem("website2Visited");
 
             if (website1Visited && website2Visited) {
-                document.getElementById("generateButton").style.display = "block"; // Show the "Generate Key" button
+                document.getElementById("generateButton").style.display = ""; // Show the "Generate Key" button
             } else {
                 document.getElementById("warningText").style.display = "block"; // Show the warning text
             }
